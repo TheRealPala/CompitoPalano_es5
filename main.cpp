@@ -36,5 +36,10 @@ int main() {
     } catch (std::out_of_range& e) {
         std::cout << e.what() << "\n" << std::endl;
     }
+    Inventory i3(i2);
+    i3.printInventory();
+    std::cout << std::endl;
+    Inventory i4 = i;
+    i4.printInventory();
     return 0;
 }

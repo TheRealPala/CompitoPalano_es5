@@ -4,6 +4,9 @@
 
 #include <stdexcept>
 #include "Inventory.h"
+#include "Weapon.h"
+#include "Equipment.h"
+#include "Robot.h"
 
 void Inventory::deleteInventory() {
     if(inventory.empty()) {
@@ -54,7 +57,7 @@ Inventory::Inventory(const Inventory &orig) {
         if(orig.getSize()) {
             deleteInventory();
             for (auto &i: orig.inventory) {
-                inventory.push_back(new Element(*i));
+                recongizeAndAdd(i);
             }
         }
     }
@@ -66,7 +69,7 @@ Inventory &Inventory::operator=(const Inventory &right) {
         if(right.getSize()) {
             deleteInventory();
             for (auto &i: right.inventory) {
-                inventory.push_back(new Element(*i));
+                recongizeAndAdd(i);
             }
         }
     }
@@ -87,6 +90,17 @@ void Inventory::deleteElement(int index) {
         delete inventory[index];
         inventory[index] = nullptr;
     }
+}
+
+void Inventory::recongizeAndAdd(Element * pElement) {
+    if(dynamic_cast<Robot*>(pElement))
+        inventory.push_back(new Robot(*dynamic_cast<Robot*>(pElement)));
+    else if(dynamic_cast<Equipment*>(pElement))
+        inventory.push_back(new Equipment(*dynamic_cast<Equipment*>(pElement)));
+    else if(dynamic_cast<Weapon*>(pElement))
+        inventory.push_back(new Weapon(*dynamic_cast<Weapon*>(pElement)));
+    else
+        inventory.push_back(new Element(*pElement));
 }
 
 

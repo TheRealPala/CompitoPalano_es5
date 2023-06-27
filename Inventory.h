@@ -27,6 +27,8 @@ public:
     void addElement(Element* element, int index);
     void printInventory() const;
     void deleteElement(int index);
+
+    void recongizeAndAdd(Element *pElement);
 };
 
 
