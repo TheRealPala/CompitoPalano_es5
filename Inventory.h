@@ -6,8 +6,27 @@
 #define COMPITOPALANO_ES5_INVENTORY_H
 
 
-class Inventory {
+#include <vector>
+#include "Element.h"
 
+class Inventory {
+private:
+    std::vector<Element*> inventory;
+    int maxSize;
+    int added;
+    void deleteInventory();
+    void checkPosition(int index);
+public:
+    explicit Inventory(int maxSize = 0) : maxSize(maxSize), added(0){};
+    Inventory(const Inventory& orig);
+    Inventory& operator=(const Inventory& right);
+    ~Inventory() { deleteInventory(); }
+    int getSize() const;
+    const std::vector<Element *> &getInventory() const;
+    void addElement (Element* element);
+    void addElement(Element* element, int index);
+    void printInventory() const;
+    void deleteElement(int index);
 };
 
 
