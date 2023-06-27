@@ -5,9 +5,7 @@
 #include <iostream>
 #include "Element.h"
 
-Element::~Element() {
-
-}
+Element::~Element() {};
 
 void Element::printDescription() {
     std::cout << "Elemento generico" << std::endl;
