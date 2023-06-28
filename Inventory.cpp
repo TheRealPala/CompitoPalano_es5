@@ -29,14 +29,6 @@ void Inventory::checkPosition(int index) {
         throw std::out_of_range("indice non valido");
 }
 
-int Inventory::getSize() const {
-    return inventory.size();
-}
-
-const std::vector<Element *> &Inventory::getInventory() const {
-    return inventory;
-}
-
 void Inventory::addElement(Element *element) {
     if(maxSize && added >= maxSize)
         throw std::out_of_range("inventario pieno");
@@ -54,7 +46,8 @@ void Inventory::addElement(Element *element, int index) {
 Inventory::Inventory(const Inventory &orig) {
     if(this != &orig) {
         maxSize = orig.maxSize;
-        if(orig.getSize()) {
+        added = orig.added;
+        if(!orig.isEmpty()) {
             deleteInventory();
             for (auto &i: orig.inventory) {
                 recongizeAndAdd(i);
@@ -66,7 +59,8 @@ Inventory::Inventory(const Inventory &orig) {
 Inventory &Inventory::operator=(const Inventory &right) {
     if(this != &right) {
         maxSize = right.maxSize;
-        if(right.getSize()) {
+        added = right.added;
+        if(!right.isEmpty()) {
             deleteInventory();
             for (auto &i: right.inventory) {
                 recongizeAndAdd(i);
@@ -90,6 +84,8 @@ void Inventory::deleteElement(int index) {
         delete inventory[index];
         inventory[index] = nullptr;
     }
+    if(maxSize)
+        added -= 1;
 }
 
 void Inventory::recongizeAndAdd(Element * pElement) {
@@ -101,6 +97,10 @@ void Inventory::recongizeAndAdd(Element * pElement) {
         inventory.push_back(new Weapon(*dynamic_cast<Weapon*>(pElement)));
     else
         inventory.push_back(new Element(*pElement));
+}
+
+bool Inventory::isEmpty() const {
+    return inventory.empty();
 }
 
 

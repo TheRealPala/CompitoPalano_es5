@@ -21,12 +21,11 @@ public:
     Inventory(const Inventory& orig);
     Inventory& operator=(const Inventory& right);
     ~Inventory() { deleteInventory(); }
-    int getSize() const;
-    const std::vector<Element *> &getInventory() const;
     void addElement (Element* element);
     void addElement(Element* element, int index);
     void printInventory() const;
     void deleteElement(int index);
+    bool isEmpty() const;
 
     void recongizeAndAdd(Element *pElement);
 };
